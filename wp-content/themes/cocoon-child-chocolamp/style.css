@@ -1,0 +1,342 @@
+@charset "UTF-8";
+
+/*!
+Theme Name: Chocolamp (Cocoon Child)
+Description: Cocoonをベースにした、Apple.com風のミニマル・大型タイポグラフィデザインの子テーマ。お金の知識と自己PRを発信するブログ用。
+Theme URI: https://wp-cocoon.com/
+Author: chocolamp
+Author URI: https://nelog.jp/
+Template:   cocoon-master
+Version:    1.0.0
+*/
+
+/************************************
+** Apple.com風 デザインシステム
+************************************/
+
+:root {
+  --am-bg: #ffffff;
+  --am-bg-alt: #f5f5f7;
+  --am-text: #1d1d1f;
+  --am-text-muted: #6e6e73;
+  --am-accent: #0071e3;
+  --am-accent-hover: #0077ed;
+  --am-dark: #000000;
+  --am-dark-text: #f5f5f7;
+  --am-border: #d2d2d7;
+  --am-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--am-font);
+  color: var(--am-text);
+  background: var(--am-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- ヘッダー：Apple風スティッキー・ブラー ---------- */
+#header-container {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: none;
+  box-shadow: none;
+  height: auto;
+}
+
+#header-container,
+#header-container a,
+#header-container .site-name a,
+#header-container .site-name-text {
+  color: var(--am-dark-text) !important;
+}
+
+#header-container .site-name a {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: opacity 0.2s ease;
+}
+
+#header-container a:hover {
+  opacity: 0.7;
+}
+
+#header-container ul li a {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  transition: opacity 0.2s ease;
+}
+
+#header-in {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* ---------- 全体タイポグラフィ ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--am-font);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--am-text);
+}
+
+#content, #content-in {
+  background: var(--am-bg);
+}
+
+/* ---------- Apple風ヒーロー／セクション（front-page.php専用） ---------- */
+.am-section {
+  padding: clamp(64px, 10vw, 140px) 24px;
+  text-align: center;
+}
+
+.am-section-dark {
+  background: var(--am-dark);
+  color: var(--am-dark-text);
+}
+
+.am-section-alt {
+  background: var(--am-bg-alt);
+}
+
+.am-eyebrow {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--am-text-muted);
+  margin-bottom: 8px;
+}
+
+.am-section-dark .am-eyebrow {
+  color: #a1a1a6;
+}
+
+.am-headline {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
+.am-sub {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--am-text-muted);
+  max-width: 640px;
+  margin: 0 auto 32px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.am-section-dark .am-sub {
+  color: #d2d2d7;
+}
+
+.am-cta-row {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.am-link {
+  font-size: 19px;
+  color: var(--am-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.am-link::after {
+  content: "  \203A";
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.am-link:hover {
+  color: var(--am-accent-hover);
+  text-decoration: underline;
+}
+
+.am-link:hover::after {
+  transform: translateX(3px);
+}
+
+.am-btn {
+  display: inline-block;
+  background: var(--am-accent);
+  color: #fff !important;
+  padding: 12px 24px;
+  border-radius: 980px;
+  font-size: 17px;
+  font-weight: 400;
+  text-decoration: none !important;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.am-btn:hover {
+  background: var(--am-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* ---------- カードグリッド ---------- */
+.am-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: left;
+}
+
+.am-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 40px 32px;
+  border: 1px solid var(--am-border);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  text-decoration: none !important;
+  color: var(--am-text) !important;
+  display: block;
+}
+
+.am-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
+  border-color: transparent;
+}
+
+.am-card-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: transform 0.35s ease;
+}
+
+.am-card:hover .am-card-icon {
+  transform: scale(1.12) rotate(-4deg);
+}
+
+.am-card-title {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.am-card-desc {
+  font-size: 15px;
+  color: var(--am-text-muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.am-card-link {
+  font-size: 14px;
+  color: var(--am-accent);
+  font-weight: 500;
+}
+
+/* ---------- 最新記事グリッド ---------- */
+.am-posts-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  text-align: left;
+}
+
+.am-post-card {
+  text-decoration: none !important;
+  color: var(--am-text) !important;
+  display: block;
+  group: post-card;
+}
+
+.am-post-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: var(--am-bg-alt);
+}
+
+.am-post-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.am-post-card:hover .am-post-thumb img {
+  transform: scale(1.08);
+}
+
+.am-post-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  transition: color 0.2s ease;
+}
+
+.am-post-card:hover .am-post-title {
+  color: var(--am-accent);
+}
+
+.am-post-date {
+  font-size: 13px;
+  color: var(--am-text-muted);
+}
+
+/* ---------- フッター ---------- */
+#footer, #footer-in {
+  background: var(--am-bg-alt);
+  color: var(--am-text-muted);
+}
+
+#footer a {
+  color: var(--am-text-muted);
+  font-size: 12px;
+}
+
+#footer a:hover {
+  color: var(--am-text);
+  text-decoration: underline;
+}
+
+/************************************
+** レスポンシブデザイン用のメディアクエリ
+************************************/
+/*1023px以下*/
+@media screen and (max-width: 1023px){
+  .am-grid,
+  .am-posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/*834px以下*/
+@media screen and (max-width: 834px){
+  .am-section {
+    padding: 56px 20px;
+  }
+}
+
+/*480px以下*/
+@media screen and (max-width: 480px){
+  .am-grid,
+  .am-posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .am-cta-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
