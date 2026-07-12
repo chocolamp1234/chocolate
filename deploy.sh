@@ -63,7 +63,7 @@ fi
 git add -A
 
 COMMIT_MSG="Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
-git commit -m "$COMMIT_MSG"
+git commit --quiet -m "$COMMIT_MSG"
 
 echo "==> $BRANCH ブランチへ push します..."
 git push origin "$BRANCH"
