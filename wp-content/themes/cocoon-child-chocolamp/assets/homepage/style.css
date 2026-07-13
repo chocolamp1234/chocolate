@@ -1,0 +1,43 @@
+/* チョコランプ「転職浄土」ホームページ用スタイル */
+
+html {
+	scroll-behavior: auto;
+}
+
+body {
+	margin: 0;
+	background: #f5f4ed;
+	color: #1e221d;
+	font-family: "Zen Kaku Gothic New", system-ui, sans-serif;
+}
+
+a {
+	color: #2f5d43;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #1e3d2c;
+}
+
+/* ---- アニメーション ---- */
+
+@keyframes rise {
+	from { opacity: 0; transform: translateY(46px); }
+	to { opacity: 1; transform: none; }
+}
+
+@keyframes fadein {
+	from { opacity: 0; transform: translateY(18px); }
+	to { opacity: 1; transform: none; }
+}
+
+@keyframes drift {
+	from { transform: translateY(34px); }
+	to { transform: translateY(-34px); }
+}
+
+@keyframes floaty {
+	0%, 100% { transform: translateY(0); }
+	50% { transform: translateY(-10px); }
+}
