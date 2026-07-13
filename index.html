@@ -12,7 +12,7 @@
 <script src="/react-dom.production.min.js" defer></script>
 <script src="/runtime.js" defer></script>
 
-</head>
+<script>window.__wpArticles = [{"num":"01","title":"\u3042","cat":"Uncategorized","date":"2026.07.13","read":"1\u5206","ph":"Uncategorized","image":"","excerpt":"\u3042","url":"\/%e3%81%82\/"}];</script></head>
 <body>
 <x-dc>
 <helmet data-dc-atomics="">
@@ -338,14 +338,22 @@ class Component extends DCLogic {
   state = { page: null, menuOpen: false, cat: 'すべて' };
 
   articles() {
-    return [
-      { num: '01', title: '「退職願は、写経の心で書きなさい」— 住職に学ぶ円満退職の作法', cat: '禅とキャリア', date: '2026.07.08', read: '5分', ph: '筆と便箋', excerpt: '勢いで書いた退職願は、怒りの写経になる。心の整え方と実務手順を住職の教えでお届け。' },
-      { num: '02', title: '面接官の「何か質問は?」に禅問答で返してはいけない', cat: 'クスッと', date: '2026.07.05', read: '4分', ph: '面接室', excerpt: '「逆にあなたは何者ですか」は不採用です。逆質問の正しい型と、やってはいけない例。' },
-      { num: '03', title: '煩悩は108、転職サイトの通知は無限 — 通知断捨離のすすめ', cat: '転職知識', date: '2026.07.01', read: '6分', ph: 'スマホ通知', excerpt: '転職アプリの通知に振り回されない設定術。情報は絞るほど、判断は冴える。' },
-      { num: '04', title: '「無」の境地で挑む年収交渉 — 沈黙は最強のカードである', cat: '転職知識', date: '2026.06.24', read: '7分', ph: '茶室', excerpt: '希望年収を伝えた後の沈黙に耐えられるか。交渉の基本と、心を無にする呼吸法。' },
-      { num: '05', title: '木魚のリズムで整える、職務経歴書の推敲術', cat: '禅とキャリア', date: '2026.06.18', read: '5分', ph: '木魚', excerpt: '職務経歴書は音読でリズムを確かめる。読みやすい経歴書の型と削る技術。' },
-      { num: '06', title: '会社を辞めたい朝に唱える、たった一つの言葉', cat: 'クスッと', date: '2026.06.12', read: '3分', ph: '朝の駅', excerpt: '「今日も定時で帰れますように」ではありません。心が少し軽くなる朝の整え方。' }
-    ].map((a) => ({ ...a, open: () => this.go('article') }));
+    // WordPress側（front-page.php）から window.__wpArticles が注入されていれば
+    // 実際の投稿データを使う。無ければ見本データを表示する。
+    const source = (window.__wpArticles && window.__wpArticles.length)
+      ? window.__wpArticles
+      : [
+        { num: '01', title: '「退職願は、写経の心で書きなさい」— 住職に学ぶ円満退職の作法', cat: '禅とキャリア', date: '2026.07.08', read: '5分', ph: '筆と便箋', excerpt: '勢いで書いた退職願は、怒りの写経になる。心の整え方と実務手順を住職の教えでお届け。' },
+        { num: '02', title: '面接官の「何か質問は?」に禅問答で返してはいけない', cat: 'クスッと', date: '2026.07.05', read: '4分', ph: '面接室', excerpt: '「逆にあなたは何者ですか」は不採用です。逆質問の正しい型と、やってはいけない例。' },
+        { num: '03', title: '煩悩は108、転職サイトの通知は無限 — 通知断捨離のすすめ', cat: '転職知識', date: '2026.07.01', read: '6分', ph: 'スマホ通知', excerpt: '転職アプリの通知に振り回されない設定術。情報は絞るほど、判断は冴える。' },
+        { num: '04', title: '「無」の境地で挑む年収交渉 — 沈黙は最強のカードである', cat: '転職知識', date: '2026.06.24', read: '7分', ph: '茶室', excerpt: '希望年収を伝えた後の沈黙に耐えられるか。交渉の基本と、心を無にする呼吸法。' },
+        { num: '05', title: '木魚のリズムで整える、職務経歴書の推敲術', cat: '禅とキャリア', date: '2026.06.18', read: '5分', ph: '木魚', excerpt: '職務経歴書は音読でリズムを確かめる。読みやすい経歴書の型と削る技術。' },
+        { num: '06', title: '会社を辞めたい朝に唱える、たった一つの言葉', cat: 'クスッと', date: '2026.06.12', read: '3分', ph: '朝の駅', excerpt: '「今日も定時で帰れますように」ではありません。心が少し軽くなる朝の整え方。' }
+      ];
+    return source.map((a) => ({
+      ...a,
+      open: () => { if (a.url) { window.location.href = a.url; } else { this.go('article'); } }
+    }));
   }
 
   go(page) {
@@ -357,7 +365,9 @@ class Component extends DCLogic {
     const page = this.state.page || this.props.startPage || 'home';
     const menuOpen = this.state.menuOpen;
     const all = this.articles();
-    const catNames = ['すべて', '転職知識', '禅とキャリア', 'クスッと'];
+    const catNames = (window.__wpArticles && window.__wpArticles.length)
+      ? ['すべて', ...Array.from(new Set(all.map((a) => a.cat)))]
+      : ['すべて', '転職知識', '禅とキャリア', 'クスッと'];
     const cats = catNames.map((name) => {
       const active = this.state.cat === name;
       return {
