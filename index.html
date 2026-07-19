@@ -12,7 +12,7 @@
 <script src="/react-dom.production.min.js" defer></script>
 <script src="/runtime.js" defer></script>
 
-<script>window.__wpArticles = [{"num":"01","title":"w","cat":"Uncategorized","date":"2026.07.14","read":"1\u5206","ph":"Uncategorized","image":"","excerpt":"wwwwww","url":"\/w\/"},{"num":"02","title":"\u3042","cat":"Uncategorized","date":"2026.07.13","read":"1\u5206","ph":"Uncategorized","image":"","excerpt":"\u3042","url":"\/%e3%81%82\/"}];</script></head>
+<script>window.__wpArticles = [{"num":"01","title":"w","cat":"Uncategorized","date":"2026.07.14","read":"1\u5206","ph":"Uncategorized","image":"","excerpt":"wwwwww","url":"\/w\/"},{"num":"02","title":"\u3042","cat":"\u5c31\u8077\u30fb\u8ee2\u8077","date":"2026.07.13","read":"1\u5206","ph":"\u5c31\u8077\u30fb\u8ee2\u8077","image":"\/wp-content\/uploads\/2026\/07\/ChatGPT-Image-2026u5e747u670813u65e5-09_35_46-768x439.png","excerpt":"\u3042","url":"\/%e3%81%82\/"}];</script></head>
 <body>
 <x-dc>
 <helmet data-dc-atomics="">
@@ -110,7 +110,7 @@
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
       <sc-for list="{{ homeArticles }}" as="a" hint-placeholder-count="3">
         <article sc-camel-on-click="{{ a.open }}" style="display:flex;flex-direction:column;gap:16px;cursor:pointer;animation:rise .1s linear both;animation-timeline:view();animation-range:entry 0% entry 50%" style-hover="transform:translateY(-6px)">
-          <div style="height:220px;background:repeating-linear-gradient(45deg,#e6e9dd 0 10px,#dbe0cf 10px 20px);display:flex;align-items:center;justify-content:center"><span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#7c8272;background:rgba(245,244,237,.85);padding:5px 9px">photo: {{ a.ph }}</span></div>
+          <div style="height:220px;background-image:{{ a.bgImage }};background-size:cover;background-position:center"></div>
           <div style="display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.16em"><span style="border:1px solid #2f5d43;color:#2f5d43;padding:3px 10px">{{ a.cat }}</span><span style="color:#87907f">{{ a.date }}</span></div>
           <h3 style="margin:0;font-family:'Shippori Mincho B1',serif;font-weight:600;font-size:19px;line-height:1.8;letter-spacing:.04em">{{ a.title }}</h3>
         </article>
@@ -156,8 +156,7 @@
   <div style="padding:56px 44px 90px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px 32px">
     <sc-for list="{{ filtered }}" as="a" hint-placeholder-count="6">
       <article sc-camel-on-click="{{ a.open }}" style="display:flex;flex-direction:column;gap:16px;cursor:pointer;animation:rise .1s linear both;animation-timeline:view();animation-range:entry 0% entry 45%" style-hover="transform:translateY(-6px)">
-        <div style="height:210px;background:repeating-linear-gradient(45deg,#e6e9dd 0 10px,#dbe0cf 10px 20px);display:flex;align-items:center;justify-content:center;position:relative">
-          <span style="font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#7c8272;background:rgba(245,244,237,.85);padding:5px 9px">photo: {{ a.ph }}</span>
+        <div style="height:210px;background-image:{{ a.bgImage }};background-size:cover;background-position:center;position:relative">
           <span style="position:absolute;top:0;left:0;background:#1e221d;color:#f5f4ed;font-family:Italiana,serif;font-size:13px;letter-spacing:.2em;padding:6px 12px">{{ a.num }}</span>
         </div>
         <div style="display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.16em"><span style="border:1px solid #2f5d43;color:#2f5d43;padding:3px 10px">{{ a.cat }}</span><span style="color:#87907f">{{ a.date }} ・ {{ a.read }}</span></div>
@@ -309,7 +308,7 @@
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px">
       <sc-for list="{{ related }}" as="a" hint-placeholder-count="3">
         <article sc-camel-on-click="{{ a.open }}" style="display:flex;flex-direction:column;gap:14px;cursor:pointer" style-hover="transform:translateY(-5px)">
-          <div style="height:170px;background:repeating-linear-gradient(45deg,#e6e9dd 0 10px,#dbe0cf 10px 20px);display:flex;align-items:center;justify-content:center"><span style="font-family:ui-monospace,Menlo,monospace;font-size:10px;color:#7c8272;background:rgba(245,244,237,.85);padding:5px 8px">photo: {{ a.ph }}</span></div>
+          <div style="height:170px;background-image:{{ a.bgImage }};background-size:cover;background-position:center"></div>
           <div style="display:flex;gap:10px;font-size:11px;letter-spacing:.16em"><span style="border:1px solid #2f5d43;color:#2f5d43;padding:3px 10px">{{ a.cat }}</span><span style="color:#87907f">{{ a.date }}</span></div>
           <h3 style="margin:0;font-family:'Shippori Mincho B1',serif;font-weight:600;font-size:16px;line-height:1.85;letter-spacing:.04em">{{ a.title }}</h3>
         </article>
@@ -352,6 +351,9 @@ class Component extends DCLogic {
       ];
     return source.map((a) => ({
       ...a,
+      bgImage: a.image
+        ? "url('" + a.image + "')"
+        : 'repeating-linear-gradient(45deg,#e6e9dd 0 10px,#dbe0cf 10px 20px)',
       open: () => { if (a.url) { window.location.href = a.url; } else { this.go('article'); } }
     }));
   }
