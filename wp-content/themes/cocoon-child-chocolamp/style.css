@@ -2,31 +2,32 @@
 
 /*!
 Theme Name: Chocolamp (Cocoon Child)
-Description: Cocoonをベースにした、書道・竹をモチーフにした和テイストの子テーマ。お金の知識と自己PRを発信するブログ用。
+Description: Cocoonをベースにした「転職浄土」子テーマ。禅・お坊さんモチーフの転職ブログ用。
 Theme URI: https://wp-cocoon.com/
 Author: chocolamp
 Author URI: https://nelog.jp/
 Template:   cocoon-master
-Version:    2.0.0
+Version:    3.0.0
 */
 
 /************************************
-** 和テイスト デザインシステム
-** （書道の墨・和紙・竹をモチーフに）
+** 転職浄土 デザインシステム
+** （和紙・墨・緑を基調とした禅テイスト）
 ************************************/
 
 :root {
-  --wa-paper: #f7f3e8;       /* 和紙 */
-  --wa-paper-deep: #efe8d6;  /* やや濃い和紙（帯・区切り用） */
-  --wa-ink: #23211d;         /* 墨 */
-  --wa-ink-soft: #5c5850;    /* 墨（薄墨・本文向け） */
-  --wa-indigo: #223a5e;      /* 藍 */
-  --wa-bamboo: #4a6b3f;      /* 竹の緑 */
-  --wa-bamboo-light: #7fa06d;/* 若竹色 */
-  --wa-vermillion: #b3421e;  /* 朱（印・アクセント） */
-  --wa-border: #ddd3ba;
-  --wa-font-serif: "游明朝", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "HGS明朝E", serif;
-  --wa-font-sans: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  --wa-paper: #f5f4ed;       /* 和紙（トップページ index.html と統一） */
+  --wa-paper-deep: #eceee3;  /* やや濃い和紙（帯・区切り用） */
+  --wa-ink: #1e221d;         /* 墨 */
+  --wa-ink-soft: #4f544b;    /* 墨（薄墨・本文向け） */
+  --wa-indigo: #2f5d43;      /* 緑（旧: 藍。トップページのアクセント色に統一） */
+  --wa-bamboo: #2f5d43;      /* 緑 */
+  --wa-bamboo-light: #9fb3a0;/* 淡い緑 */
+  --wa-vermillion: #2f5d43;  /* アクセント（旧: 朱。緑に統一） */
+  --wa-border: rgba(30,34,29,.14);
+  --wa-font-serif: "Shippori Mincho B1", "游明朝", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  --wa-font-sans: "Zen Kaku Gothic New", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  --wa-font-display: "Italiana", serif;
 }
 
 body {
