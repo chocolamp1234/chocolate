@@ -2,7 +2,7 @@
 
 /*!
 Theme Name: Cocoon Child
-Description: Cocoon専用の子テーマ
+Description: Cocoon専用の子テーマ（チョコランプ / 転職浄土）
 Theme URI: https://wp-cocoon.com/
 Author: わいひら
 Author URI: https://nelog.jp/
@@ -12,8 +12,116 @@ Version:    1.1.4
 
 /************************************
 ** 子テーマ用のスタイルを書く
+** Cocoon標準のレイアウト・機能はそのまま活かし、
+** 配色・タイポグラフィ・カード演出のみをスタイリッシュに調整。
 ************************************/
-/*必要ならばここにコードを書く*/
+
+:root {
+  --cl-paper: #f7f7f4;
+  --cl-ink: #1e221d;
+  --cl-ink-soft: #5c6058;
+  --cl-accent: #2f5d43;
+  --cl-accent-dark: #1e3d2c;
+  --cl-border: rgba(30, 34, 29, 0.1);
+}
+
+body {
+  background: var(--cl-paper);
+  color: var(--cl-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cl-accent);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--cl-accent-dark);
+}
+
+h1, h2, h3, h4, h5, h6,
+.article-title, .entry-card-title, .article h2, .article h3 {
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+/* ---------- ヘッダー ---------- */
+#header-container {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background-color: rgba(247, 247, 244, 0.92);
+  backdrop-filter: saturate(180%) blur(10px);
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  border-bottom: 1px solid var(--cl-border);
+  box-shadow: none;
+}
+
+.site-name a {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--cl-ink) !important;
+  transition: opacity 0.2s ease;
+}
+
+.site-name a:hover {
+  opacity: 0.7;
+}
+
+#global-menu-container a,
+.global-menu a {
+  transition: color 0.2s ease;
+}
+
+#global-menu-container a:hover,
+.global-menu a:hover {
+  color: var(--cl-accent) !important;
+}
+
+/* ---------- カード（新着記事・関連記事） ---------- */
+.entry-card-wrap {
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-color: var(--cl-border) !important;
+}
+
+.entry-card-wrap:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(30, 34, 29, 0.1);
+}
+
+.entry-card-thumb img {
+  transition: transform 0.5s ease;
+}
+
+.entry-card-wrap:hover .entry-card-thumb img {
+  transform: scale(1.06);
+}
+
+.entry-card-title {
+  transition: color 0.2s ease;
+}
+
+.entry-card-wrap:hover .entry-card-title {
+  color: var(--cl-accent);
+}
+
+/* ---------- ボタン ---------- */
+.btn, .wp-block-button__link, input[type="submit"] {
+  border-radius: 999px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover, .wp-block-button__link:hover, input[type="submit"]:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- フッター ---------- */
+#footer {
+  border-top: 1px solid var(--cl-border);
+}
 
 /************************************
 ** レスポンシブデザイン用のメディアクエリ
