@@ -53,6 +53,15 @@ if $DRY_RUN; then
   exit 0
 fi
 
+# Simply Static の相対URL変換はスキーム付きURLしか書き換えないため、
+# プロトコルなしで出力される chocolamp.local (twitter:domain 等) を本番ドメインに置換する
+echo "==> chocolamp.local の残存参照を本番ドメインに置換します..."
+find "$REPO_DIR" -name "*.html" -not -path "*/.git/*" -print0 \
+  | xargs -0 grep -lI "chocolamp\.local" 2>/dev/null \
+  | while IFS= read -r f; do
+      sed -i '' 's/chocolamp\.local/chocolamp.vercel.app/g' "$f"
+    done
+
 cd "$REPO_DIR"
 
 if [[ -z "$(git status --porcelain)" ]]; then
