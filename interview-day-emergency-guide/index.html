@@ -86,6 +86,11 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 .clmp-body .clmp-product p{font-size:13.5px;line-height:1.9;margin:0;letter-spacing:.03em}
 .clmp-body .clmp-product ul{font-size:13.5px;line-height:1.9;margin:0;padding-left:1.2em}
 .clmp-body .clmp-product .clmp-btn{width:fit-content;padding:12px 26px;font-size:13px;margin-top:4px}
+.clmp-body .clmp-product .prod-row{display:flex;gap:22px;align-items:flex-start}
+.clmp-body .clmp-product .prod-img{flex:0 0 128px;width:128px;height:128px;background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.clmp-body .clmp-product .prod-img img{width:100%;height:100%;object-fit:contain;display:block}
+.clmp-body .clmp-product .prod-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px}
+@media (max-width:640px){.clmp-body .clmp-product .prod-row{flex-direction:column}.clmp-body .clmp-product .prod-img{width:104px;height:104px}}
 .clmp-body .clmp-sum{background:var(--dark);color:var(--paper);padding:32px 34px;margin:0 0 44px;display:flex;flex-direction:column;gap:14px}
 .clmp-body .clmp-sum .e{font-family:'Italiana',serif;font-size:12px;letter-spacing:.4em;color:var(--sage)}
 .clmp-body .clmp-sum ol{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.9}
@@ -203,14 +208,19 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 
 <div class="clmp-product">
   <span class="label">RECOMMEND</span>
-  <h4><span id="toc5">正露丸 130粒(第二類医薬品)</span></h4>
-  <p>下痢・食あたり・軟便・水あたり・くだり腹に対応する、日本で長年愛用されてきた定番の胃腸薬。1日3回、食後の服用が基本で、5歳以上から使用できるためカバンに一つ入れておけば家族の分もカバーできる。</p>
-  <ul>
+  <div class="prod-row">
+    <div class="prod-media"><a rel="nofollow sponsored noopener" href="https://hb.afl.rakuten.co.jp/ichiba/566b5e27.551e93b6.566b5e29.f3c4da62/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkenkotoyama%2Freco-013%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMDB4MTAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" class="prod-img"><img decoding="async" src="https://hbb.afl.rakuten.co.jp/hgb/566b5e27.551e93b6.566b5e29.f3c4da62/?me_id=1231529&amp;item_id=10000618&amp;pc=https%3A%2F%2Faffiliate.rakuten.co.jp%2Fimg%2Fdefault_image.gif" alt="正露丸 130粒" loading="lazy"></a></div>
+    <div class="prod-body">
+      <h4><span id="toc5">正露丸 130粒(第二類医薬品)</span></h4>
+      <p>下痢・食あたり・軟便・水あたり・くだり腹に対応する、日本で長年愛用されてきた定番の胃腸薬。1日3回、食後の服用が基本で、5歳以上から使用できるためカバンに一つ入れておけば家族の分もカバーできる。</p>
+      <ul>
     <li>下痢・食あたりなど幅広い症状に対応</li>
     <li>年齢に応じた用量設定で家族兼用しやすい</li>
     <li>昔から実績のある製薬会社(渡辺薬品工業)の製品で安心感がある</li>
   </ul>
-  <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://a.r10.to/h5hsK2" target="_blank">楽天で正露丸をチェックする →</a>
+      <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://hb.afl.rakuten.co.jp/ichiba/566b5e27.551e93b6.566b5e29.f3c4da62/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkenkotoyama%2Freco-013%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMDB4MTAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank">楽天で正露丸をチェックする →</a>
+    </div>
+  </div>
 </div>
 
 <h2><span id="toc6">五、移動ルート上の”トイレマップ”を作っておく</span></h2>
@@ -233,14 +243,19 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 
 <div class="clmp-product">
   <span class="label">RECOMMEND</span>
-  <h4><span id="toc8">腹巻き メンズ・男女兼用(日本製・コットン)</span></h4>
-  <p>楽天ランキング1位を獲得したこともある人気の腹巻き。伸縮性に優れたテレコ素材で、スーツの下に着けても響きにくい薄さが魅力。日本製で品質も安心できる。</p>
-  <ul>
+  <div class="prod-row">
+    <div class="prod-media"><a rel="nofollow sponsored noopener" href="https://hb.afl.rakuten.co.jp/ichiba/566b5f65.5c89b0ae.566b5f66.74ca94cd/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmenhyakuya%2Fmh00050%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMDB4MTAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" class="prod-img"><img decoding="async" src="https://hbb.afl.rakuten.co.jp/hgb/566b5f65.5c89b0ae.566b5f66.74ca94cd/?me_id=1431935&amp;item_id=10000086&amp;pc=https%3A%2F%2Faffiliate.rakuten.co.jp%2Fimg%2Fdefault_image.gif" alt="腹巻き メンズ・男女兼用" loading="lazy"></a></div>
+    <div class="prod-body">
+      <h4><span id="toc8">腹巻き メンズ・男女兼用(日本製・コットン)</span></h4>
+      <p>楽天ランキング1位を獲得したこともある人気の腹巻き。伸縮性に優れたテレコ素材で、スーツの下に着けても響きにくい薄さが魅力。日本製で品質も安心できる。</p>
+      <ul>
     <li>男女兼用・M/Lの2サイズ展開で選びやすい</li>
     <li>伸縮性のある素材で着け心地が良く、スーツの下でも目立ちにくい</li>
     <li>冷え対策だけでなく”温活・腸活”にも役立つ</li>
   </ul>
-  <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://a.r10.to/h5fjTs" target="_blank">楽天で腹巻きをチェックする →</a>
+      <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://hb.afl.rakuten.co.jp/ichiba/566b5f65.5c89b0ae.566b5f66.74ca94cd/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmenhyakuya%2Fmh00050%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIxMDB4MTAwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank">楽天で腹巻きをチェックする →</a>
+    </div>
+  </div>
 </div>
 
 <h2><span id="toc9">七、深呼吸で自律神経を整える</span></h2>
@@ -265,26 +280,36 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 
 <div class="clmp-product">
   <span class="label">RECOMMEND</span>
-  <h4><span id="toc11">ライフリー 薄型軽快パンツ(S/M/L/LL)</span></h4>
-  <p>「薄型軽快」の名の通り、着用時のかさばりが少なく通気性も考慮された設計。300mlの吸収量があり、日中の”もしも”に対応できる。S〜LLの4サイズ展開でフィット感を選べる。</p>
-  <ul>
+  <div class="prod-row">
+    <div class="prod-media"><a rel="nofollow sponsored noopener" href="https://hb.afl.rakuten.co.jp/ichiba/566bdc94.a05c14f5.566bdc95.3211f252/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fecareshop%2F419303%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" class="prod-img"><img decoding="async" src="https://hbb.afl.rakuten.co.jp/hgb/566bdc94.a05c14f5.566bdc95.3211f252/?me_id=1355022&amp;item_id=10038102&amp;pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fecareshop%2Fcabinet%2F086%2F419303_s.jpg%3F_ex%3D240x240&amp;s=240x240&amp;t=picttext" alt="ライフリー 薄型軽快パンツ" loading="lazy"></a></div>
+    <div class="prod-body">
+      <h4><span id="toc11">ライフリー 薄型軽快パンツ(S/M/L/LL)</span></h4>
+      <p>「薄型軽快」の名の通り、着用時のかさばりが少なく通気性も考慮された設計。300mlの吸収量があり、日中の”もしも”に対応できる。S〜LLの4サイズ展開でフィット感を選べる。</p>
+      <ul>
     <li>薄型設計でスーツの下でも響きにくい</li>
     <li>300ml吸収でしっかり安心</li>
     <li>通気性設計で蒸れを軽減</li>
   </ul>
-  <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://a.r10.to/hgvJLx" target="_blank">楽天でライフリーをチェックする →</a>
+      <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://hb.afl.rakuten.co.jp/ichiba/566bdc94.a05c14f5.566bdc95.3211f252/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fecareshop%2F419303%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank">楽天でライフリーをチェックする →</a>
+    </div>
+  </div>
 </div>
 
 <div class="clmp-product">
   <span class="label">RECOMMEND</span>
-  <h4><span id="toc12">アクティ 薄型(M-Lサイズ・消臭抗菌プラス)</span></h4>
-  <p>より安心感を求めるなら、吸収量150mlに対応するこちらのタイプもおすすめ。消臭抗菌プラス機能と肌ケア設計で、長時間の着用でも蒸れやかぶれを抑えてくれる。ウエスト60〜90cm対応。</p>
-  <ul>
+  <div class="prod-row">
+    <div class="prod-media"><a rel="nofollow sponsored noopener" href="https://hb.afl.rakuten.co.jp/ichiba/566bdcfc.f9e8437e.566bdcfd.821e2409/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fscbmitsuokun1972%2F4901750806477%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank" class="prod-img"><img decoding="async" src="https://hbb.afl.rakuten.co.jp/hgb/566bdcfc.f9e8437e.566bdcfd.821e2409/?me_id=1307570&amp;item_id=10069475&amp;pc=https%3A%2F%2Fthumbnail.image.rakuten.co.jp%2F%400_mall%2Fscbmitsuokun1972%2Fcabinet%2Fhousehold%2Fnursing_care_food%2F4901750806477.jpg%3F_ex%3D240x240&amp;s=240x240&amp;t=picttext" alt="アクティ 薄型" loading="lazy"></a></div>
+    <div class="prod-body">
+      <h4><span id="toc12">アクティ 薄型(M-Lサイズ・消臭抗菌プラス)</span></h4>
+      <p>より安心感を求めるなら、吸収量150mlに対応するこちらのタイプもおすすめ。消臭抗菌プラス機能と肌ケア設計で、長時間の着用でも蒸れやかぶれを抑えてくれる。ウエスト60〜90cm対応。</p>
+      <ul>
     <li>消臭抗菌プラスで長時間でも安心</li>
     <li>肌ケア機能で蒸れ・かぶれを軽減</li>
     <li>フィット感が高くずれにくい設計</li>
   </ul>
-  <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://a.r10.to/hPW0wR" target="_blank">楽天でアクティをチェックする →</a>
+      <a rel="nofollow sponsored noopener" class="clmp-btn solid" href="https://hb.afl.rakuten.co.jp/ichiba/566bdcfc.f9e8437e.566bdcfd.821e2409/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fscbmitsuokun1972%2F4901750806477%2F&amp;link_type=picttext&amp;ut=eyJwYWdlIjoiaXRlbSIsInR5cGUiOiJwaWN0dGV4dCIsInNpemUiOiIyNDB4MjQwIiwibmFtIjoxLCJuYW1wIjoicmlnaHQiLCJjb20iOjEsImNvbXAiOiJkb3duIiwicHJpY2UiOjEsImJvciI6MSwiY29sIjoxLCJiYnRuIjoxLCJwcm9kIjowLCJhbXAiOmZhbHNlfQ%3D%3D" target="_blank">楽天でアクティをチェックする →</a>
+    </div>
+  </div>
 </div>
 
 <p>保険は、使わないに越したことはない。でも「持っている」という事実が、結果的に一番の精神安定剤になる。転ばぬ先の杖ならぬ、「漏らさぬ先のパンツ」である。</p>
