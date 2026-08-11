@@ -132,7 +132,7 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 <header class="clmp-header">
   <a class="clmp-logo" href="/"><b>転職浄土</b><span>TENSHOKU &amp; ZEN</span></a>
   <div style="display:flex;align-items:center;gap:22px">
-    <div class="clmp-langsw" style="display:flex;gap:10px;align-items:center;font-family:'Italiana',serif;font-size:12px;letter-spacing:.12em"><a href="/interview-earthquake-emergency-guide/" style="color:var(--green);font-weight:700;text-decoration:none">JA</a><a href="/en/interview-earthquake-emergency-guide-en/" style="color:var(--grey);text-decoration:none;opacity:.65">EN</a><a href="/ko/interview-earthquake-emergency-guide-ko/" style="color:var(--grey);text-decoration:none;opacity:.65">KO</a></div>    <button class="clmp-burger" type="button" aria-label="メニューを開く"><span class="clmp-bword">MENU</span><span class="clmp-bars"><i></i><i></i><i></i></span></button>
+    <div class="clmp-langsw" style="display:flex;gap:10px;align-items:center;font-family:'Italiana',serif;font-size:12px;letter-spacing:.12em"><a href="/interview-earthquake-emergency-guide/" data-lang="ja" style="color:var(--green);font-weight:700;text-decoration:none">JA</a><a href="/en/interview-earthquake-emergency-guide-en/" data-lang="en" style="color:var(--grey);text-decoration:none;opacity:.65">EN</a><a href="/ko/interview-earthquake-emergency-guide-ko/" data-lang="ko" style="color:var(--grey);text-decoration:none;opacity:.65">KO</a></div>    <button class="clmp-burger" type="button" aria-label="メニューを開く"><span class="clmp-bword">MENU</span><span class="clmp-bars"><i></i><i></i><i></i></span></button>
   </div>
 </header>
 <nav class="clmp-menu">
@@ -358,5 +358,45 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
   root.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
 })();
 </script>
-</body>
+<div id="clmp-lang-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#1e2a22;color:#f5f4ed;padding:16px 20px;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;box-shadow:0 -4px 20px rgba(0,0,0,.2)">
+  <span id="clmp-lang-banner-text"></span>
+  <a id="clmp-lang-banner-switch" href="#" style="background:#2f5d43;color:#fff;padding:8px 18px;border-radius:999px;text-decoration:none;font-size:13px;white-space:nowrap"></a>
+  <button id="clmp-lang-banner-close" type="button" aria-label="close" style="background:none;border:none;color:#9fb3a0;font-size:18px;cursor:pointer;line-height:1;padding:0 4px">×</button>
+</div>
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('clmp_lang_dismissed')) return;
+    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    var target = null, label = '';
+    if (nav.indexOf('en') === 0) { target = 'en'; label = 'Switch to English'; }
+    else if (nav.indexOf('ko') === 0) { target = 'ko'; label = '한국어로 보기'; }
+    if (!target) return;
+
+    var link = document.querySelector('.clmp-langsw a[data-lang="' + target + '"]');
+    if (!link) return;
+
+    var banner = document.getElementById('clmp-lang-banner');
+    var text = document.getElementById('clmp-lang-banner-text');
+    var btn = document.getElementById('clmp-lang-banner-switch');
+    var closeBtn = document.getElementById('clmp-lang-banner-close');
+
+    text.textContent = target === 'en'
+      ? 'This page is in Japanese. Prefer English?'
+      : '이 페이지는 일본어로 되어 있습니다. 한국어로 보시겠어요?';
+    btn.textContent = label;
+    btn.href = link.getAttribute('href');
+    banner.style.display = 'flex';
+
+    btn.addEventListener('click', function(){
+      localStorage.setItem('clmp_lang_dismissed', '1');
+    });
+    closeBtn.addEventListener('click', function(){
+      localStorage.setItem('clmp_lang_dismissed', '1');
+      banner.style.display = 'none';
+    });
+  } catch (e) {}
+})();
+</script>
+		</body>
 </html>
