@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/en", "destination": "/en/top-en/" },
+    { "source": "/en/", "destination": "/en/top-en/" },
+    { "source": "/ko", "destination": "/ko/top-ko/" },
+    { "source": "/ko/", "destination": "/ko/top-ko/" }
+  ]
+}

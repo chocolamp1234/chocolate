@@ -41,7 +41,7 @@ fi
 echo "==> 同期元: $SOURCE_DIR"
 echo "==> 同期先: $REPO_DIR"
 
-RSYNC_OPTS=(-a --delete --exclude ".git" --exclude "deploy.sh" --exclude "README.md")
+RSYNC_OPTS=(-a --delete --exclude ".git" --exclude "deploy.sh" --exclude "README.md" --exclude "vercel.json")
 if $DRY_RUN; then
   RSYNC_OPTS+=(--dry-run -v)
 fi
