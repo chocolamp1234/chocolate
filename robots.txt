@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://chocolate-umber.vercel.app/wp-sitemap.xml
+Sitemap: https://chocolamp.vercel.app/wp-sitemap.xml

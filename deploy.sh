@@ -62,6 +62,12 @@ find "$REPO_DIR" -name "*.html" -not -path "*/.git/*" -print0 \
       sed -i '' 's/chocolamp\.local/chocolamp.vercel.app/g' "$f"
     done
 
+# wp-sitemap*.xml の <loc> はサイトマップ仕様上、絶対URLである必要があるため
+# Simply Static が出力する相対パスを本番ドメイン付きの絶対URLに変換する
+echo "==> サイトマップの<loc>を絶対URLに変換します..."
+find "$REPO_DIR" -maxdepth 1 -name "wp-sitemap*.xml" -print0 \
+  | xargs -0 -I{} sed -i '' 's#<loc>/#<loc>https://chocolamp.vercel.app/#g' {}
+
 cd "$REPO_DIR"
 
 if [[ -z "$(git status --porcelain)" ]]; then
