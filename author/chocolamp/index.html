@@ -46,9 +46,6 @@
 <link rel="preload" as="font" type="font/woff2" href="/wp-content/themes/cocoon-master/webfonts/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0" crossorigin="anonymous">
 <title>chocolamp | chocolamp</title>
 <meta name="robots" content="noindex, follow">
-<link rel="alternate" href="/author/chocolamp/" hreflang="ja">
-<link rel="alternate" href="/en/author/chocolamp/" hreflang="en">
-<link rel="alternate" href="/ko/author/chocolamp/" hreflang="ko">
 		<link rel="icon" href="/wp-content/themes/cocoon-child-chocolamp/images/favicon.ico" sizes="any">
 		<link rel="icon" type="image/png" sizes="32x32" href="/wp-content/themes/cocoon-child-chocolamp/images/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/wp-content/themes/cocoon-child-chocolamp/images/favicon-16x16.png">
@@ -59,10 +56,8 @@
 		<meta name="msapplication-TileImage" content="/wp-content/themes/cocoon-child-chocolamp/images/favicon-270x270.png">
 		<meta name="google-site-verification" content="52xJCrOPUFkppUjKpPGCapPedaBtdPDKbtLE0x9pL9w">
 		<link rel="alternate" hreflang="ja" href="/author/chocolamp/">
-<link rel="alternate" hreflang="en" href="/en/author/chocolamp/">
-<link rel="alternate" hreflang="ko" href="/ko/author/chocolamp/">
 <link rel="alternate" hreflang="x-default" href="/author/chocolamp/">
-
+		
 <!-- OGP -->
 <meta property="og:type" content="website">
 <meta property="og:description" content="転職浄土 | 転職の知識を、静かに丁寧に発信するブログ">
@@ -315,47 +310,7 @@
   <script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/cocoon-child-chocolamp/*","/wp-content/themes/cocoon-master/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-<div id="clmp-lang-banner" style="display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#1e2a22;color:#f5f4ed;padding:16px 20px;font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;box-shadow:0 -4px 20px rgba(0,0,0,.2)">
-  <span id="clmp-lang-banner-text"></span>
-  <a id="clmp-lang-banner-switch" href="#" style="background:#2f5d43;color:#fff;padding:8px 18px;border-radius:999px;text-decoration:none;font-size:13px;white-space:nowrap"></a>
-  <button id="clmp-lang-banner-close" type="button" aria-label="close" style="background:none;border:none;color:#9fb3a0;font-size:18px;cursor:pointer;line-height:1;padding:0 4px">×</button>
-</div>
-<script>
-(function(){
-  try {
-    if (localStorage.getItem('clmp_lang_dismissed')) return;
-    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    var target = null, label = '';
-    if (nav.indexOf('en') === 0) { target = 'en'; label = 'Switch to English'; }
-    else if (nav.indexOf('ko') === 0) { target = 'ko'; label = '한국어로 보기'; }
-    if (!target) return;
-
-    var link = document.querySelector('.clmp-langsw a[data-lang="' + target + '"]');
-    if (!link) return;
-
-    var banner = document.getElementById('clmp-lang-banner');
-    var text = document.getElementById('clmp-lang-banner-text');
-    var btn = document.getElementById('clmp-lang-banner-switch');
-    var closeBtn = document.getElementById('clmp-lang-banner-close');
-
-    text.textContent = target === 'en'
-      ? 'This page is in Japanese. Prefer English?'
-      : '이 페이지는 일본어로 되어 있습니다. 한국어로 보시겠어요?';
-    btn.textContent = label;
-    btn.href = link.getAttribute('href');
-    banner.style.display = 'flex';
-
-    btn.addEventListener('click', function(){
-      localStorage.setItem('clmp_lang_dismissed', '1');
-    });
-    closeBtn.addEventListener('click', function(){
-      localStorage.setItem('clmp_lang_dismissed', '1');
-      banner.style.display = 'none';
-    });
-  } catch (e) {}
-})();
-</script>
-		<script id="cocoon-js-js-extra">
+<script id="cocoon-js-js-extra">
 var cocoon_localize_script_options = {"is_lazy_load_enable":"","is_fixed_mobile_buttons_enable":"","is_google_font_lazy_load_enable":""};
 //# sourceURL=cocoon-js-js-extra
 </script>
