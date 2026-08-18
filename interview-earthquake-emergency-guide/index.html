@@ -98,6 +98,9 @@ background:var(--paper);color:var(--ink);font-family:'Zen Kaku Gothic New',syste
 .clmp-body h2{font-family:'Shippori Mincho B1',serif;font-weight:600;font-size:26px;letter-spacing:.1em;border-left:4px solid var(--green);padding-left:18px;margin:44px 0 24px}
 .clmp-body h3{font-family:'Shippori Mincho B1',serif;font-weight:600;font-size:20px;letter-spacing:.08em;margin:36px 0 18px}
 .clmp-body img{max-width:100%;height:auto;margin:20px 0}
+@media (max-width:640px){
+  .clmp-body img[style*="object-fit"]{height:auto !important;aspect-ratio:auto;object-fit:contain !important;background:var(--paper2)}
+}
 .clmp-body #toc{display:none !important}
 .clmp-body blockquote{background:var(--paper2);padding:24px 30px;margin:0 0 30px;font-size:14px;line-height:2}
 .clmp-body a{color:var(--green)}
