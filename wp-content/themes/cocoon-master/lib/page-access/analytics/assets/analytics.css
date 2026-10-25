@@ -2,10 +2,576 @@
 
 /* カレンダーヒートマップ */
 .cocoon-analytics-heatmap {
+  --cocoon-analytics-heatmap-level-0-color: #ebedf0;
+  --cocoon-analytics-heatmap-level-1-color: #c6e48b;
+  --cocoon-analytics-heatmap-level-2-color: #7bc96f;
+  --cocoon-analytics-heatmap-level-3-color: #239a3b;
+  --cocoon-analytics-heatmap-level-4-color: #196127;
+  --cocoon-analytics-heatmap-outlier-color: #033a16;
   overflow-x: auto;
   /* 非表示ツールチップ（擬似要素）のわずかなはみ出しによる縦スクロールバー表示を抑止 */
   overflow-y: hidden;
   padding: 4px 0;
+}
+
+/* クリック解析 */
+
+.cocoon-click-subtabs {
+  margin-bottom: 14px;
+}
+
+.cocoon-click-kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.cocoon-click-chart-wrap {
+  position: relative;
+  height: 300px;
+}
+
+.cocoon-click-insights-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.cocoon-click-insight-list {
+  margin: 0;
+}
+
+.cocoon-click-insight-list li {
+  margin: 0 0 10px 18px;
+}
+
+.cocoon-click-badge {
+  display: inline-block;
+  margin: 2px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #f0f0f1;
+  white-space: nowrap;
+}
+
+.cocoon-click-table {
+  table-layout: fixed;
+  min-width: 1400px;
+}
+
+.cocoon-click-table-panel { min-width: 0; }
+
+.cocoon-click-scroll-controls,
+.cocoon-click-scroll-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cocoon-click-scroll-controls {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #50575e;
+}
+
+.cocoon-click-scroll-controls.is-stuck {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(29, 35, 39, 0.16);
+}
+.cocoon-click-scroll-controls[hidden] { display: none; }
+.cocoon-click-scroll-buttons { direction: ltr; }
+
+/* 表の縦スクロール中だけ現れる、元の列幅と横位置に同期した見出し */
+.cocoon-click-sticky-header {
+  position: fixed;
+  z-index: 9;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid #c3c4c7;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(29, 35, 39, 0.16);
+}
+
+.cocoon-click-sticky-header[hidden] { display: none; }
+
+.cocoon-click-sticky-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.cocoon-click-sticky-header .cocoon-click-table {
+  margin: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.cocoon-click-scroll-buttons .button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 10px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* 端到達時もキーボードフォーカスを保持する無効ボタンの表示 */
+.cocoon-click-scroll-buttons .button[aria-disabled="true"] {
+  color: #a7aaad;
+  background: #f6f7f7;
+  border-color: #dcdcde;
+  cursor: default;
+}
+
+.cocoon-click-table-frame { position: relative; }
+
+/* セル操作を妨げず、横移動中も表示位置を維持する端の影 */
+.cocoon-click-table-frame::before,
+.cocoon-click-table-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cocoon-click-table-frame::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(29, 35, 39, 0.22), transparent);
+}
+
+.cocoon-click-table-frame::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(29, 35, 39, 0.22), transparent);
+}
+
+.cocoon-click-table-frame.can-scroll-left::before,
+.cocoon-click-table-frame.can-scroll-right::after { opacity: 1; }
+
+/* 数値比較に必要な幅を先に確保した列配分 */
+.cocoon-click-col-source { width: 14%; }
+.cocoon-click-col-link { width: 24%; }
+.cocoon-click-col-location { width: 12%; }
+.cocoon-click-col-impressions,
+.cocoon-click-col-clicks,
+.cocoon-click-col-arrival { width: 6%; }
+.cocoon-click-col-unique,
+.cocoon-click-col-ctr,
+.cocoon-click-col-engagement,
+.cocoon-click-col-time { width: 8%; }
+
+.cocoon-click-table-no-source .cocoon-click-col-link { width: 38%; }
+
+.cocoon-click-table th,
+.cocoon-click-table td {
+  padding: 12px 10px;
+  line-height: 1.5;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.cocoon-click-table th {
+  vertical-align: middle;
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+.cocoon-click-table th:not(.cocoon-click-cell-source, .cocoon-click-cell-link, .cocoon-click-cell-location),
+.cocoon-click-table .cocoon-click-number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cocoon-click-number { white-space: nowrap; }
+.cocoon-click-table tbody tr:hover { background: #f0f6fc; }
+
+/* 列見出し全体を操作対象とする並べ替えリンク */
+.cocoon-click-table th.cocoon-click-sortable { padding: 0; }
+.cocoon-click-table .cocoon-click-sort {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 44px;
+  padding: 12px 6px;
+  box-sizing: border-box;
+  color: #2271b1;
+  text-decoration: none;
+}
+.cocoon-click-sort-icon { flex: 0 0 auto; font-size: 11px; }
+.cocoon-click-sort:hover,
+.cocoon-click-sort:focus-visible { background: #f0f6fc; text-decoration: underline; }
+.cocoon-click-table th[aria-sort] { background: #f0f6fc; }
+.cocoon-click-table th[aria-sort] .cocoon-click-sort { font-weight: 600; }
+#cocoon-click-links,
+.cocoon-click-sort { scroll-margin-top: 80px; }
+
+.cocoon-click-link-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cocoon-click-image-consent {
+  flex: 0 1 150px;
+  min-width: 100px;
+}
+.cocoon-click-image-consent small {
+  display: block;
+  color: #646970;
+  font-size: 11px;
+}
+.cocoon-click-image-consent [hidden] { display: none; }
+
+/* 縦長・横長画像とも切り抜きなしの縮小表示 */
+.cocoon-click-thumbnail {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  max-width: 64px;
+  max-height: 48px;
+  object-fit: contain;
+  border-radius: 3px;
+}
+
+.cocoon-click-link-caption,
+.cocoon-click-source-title,
+.cocoon-click-link-heading {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cocoon-click-source-title { -webkit-line-clamp: 3; }
+.cocoon-click-cell-link:focus-within .cocoon-click-link-caption,
+.cocoon-click-cell-link:focus-within .cocoon-click-link-heading,
+.cocoon-click-source-title:focus { -webkit-line-clamp: unset; }
+
+.cocoon-click-table .cocoon-click-link-url {
+  display: block;
+  margin-top: 4px;
+  padding: 0;
+  background: transparent;
+  color: #50575e;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cocoon-click-link-url:focus {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.cocoon-click-link-heading,
+.cocoon-click-link-note {
+  display: block;
+  margin-top: 4px;
+  color: #646970;
+}
+
+.cocoon-click-link-heading { display: -webkit-box; }
+.cocoon-click-link-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px; }
+.cocoon-click-link-badges .cocoon-click-badge { margin: 0; white-space: normal; }
+
+.cocoon-click-insufficient {
+  display: block;
+  color: #7a4900;
+  font-size: 11px;
+}
+
+.cocoon-click-stat-details {
+  margin-top: 3px;
+  white-space: normal;
+  font-size: 12px;
+}
+
+.cocoon-click-stat-details summary {
+  cursor: pointer;
+  color: #2271b1;
+}
+
+.cocoon-click-stat-details small {
+  display: block;
+  margin-top: 6px;
+  text-align: left;
+  color: #50575e;
+}
+
+.cocoon-click-stat-details[hidden],
+.cocoon-click-stat-close[hidden] {
+  display: none !important;
+}
+
+.cocoon-click-stat-trigger {
+  display: block;
+  min-height: 28px;
+  margin: 3px 0 0 auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #2271b1;
+  font: inherit;
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cocoon-click-stat-trigger::before {
+  content: "ⓘ";
+  margin-right: 4px;
+}
+
+/* 表のスクロール領域から独立した詳細Tips */
+.cocoon-click-stat-dialog {
+  box-sizing: border-box;
+  width: min(480px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #c3c4c7;
+  border-radius: 8px;
+  background: #fff;
+  color: #2c3338;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 1.7;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.cocoon-click-stat-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cocoon-click-stat-header {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px 12px 20px;
+  border-bottom: 1px solid #dcdcde;
+  background: #fff;
+}
+
+.cocoon-click-stat-header h3 {
+  margin: 0;
+  color: #1d2327;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.cocoon-click-stat-close {
+  flex: 0 0 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #50575e;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.cocoon-click-stat-close:hover {
+  background: #f0f0f1;
+}
+
+.cocoon-click-stat-close:focus-visible,
+.cocoon-click-stat-trigger:focus-visible {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
+}
+
+.cocoon-click-stat-link {
+  max-height: 5.1em;
+  margin: 12px 20px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  color: #646970;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.cocoon-click-stat-metrics {
+  margin: 0 20px;
+}
+
+.cocoon-click-stat-metrics > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f1;
+}
+
+.cocoon-click-stat-metrics dt {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cocoon-click-stat-metrics dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.cocoon-click-stat-rate {
+  color: #1d2327;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.cocoon-click-stat-metrics small {
+  display: block;
+  color: #646970;
+  font-size: 12px;
+}
+
+.cocoon-click-stat-note {
+  margin: 16px 20px;
+  padding: 10px 12px;
+  border-left: 3px solid #dba617;
+  background: #fcf9e8;
+  color: #624300;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.cocoon-click-stat-note strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cocoon-click-stat-explanation {
+  margin: 16px 20px 20px;
+  color: #50575e;
+}
+
+.cocoon-click-stat-explanation p {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+@media (width <= 480px) {
+  .cocoon-click-stat-metrics > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .cocoon-click-stat-metrics dd {
+    text-align: left;
+  }
+}
+
+.cocoon-click-table-scroll:focus-visible,
+.cocoon-click-table :focus-visible {
+  outline: 2px solid #2271b1;
+  outline-offset: -2px;
+}
+
+.cocoon-click-map-viewport {
+  overflow: auto;
+}
+
+.cocoon-click-map-frame-wrap {
+  position: relative;
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: #fff;
+}
+
+.cocoon-click-map-frame-wrap iframe {
+  display: block;
+  width: 100%;
+  min-height: 800px;
+  border: 1px solid #c3c4c7;
+  pointer-events: none;
+}
+
+.cocoon-click-map-overlay {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  min-height: 800px;
+  pointer-events: none;
+}
+
+.cocoon-click-heat-cell {
+  position: absolute;
+  z-index: 1;
+  background: #d63638;
+}
+
+.cocoon-click-link-marker {
+  position: absolute;
+  z-index: 2;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  box-sizing: border-box;
+  background: #2271b1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  font: 600 11px/18px sans-serif;
+  text-align: center;
+}
+
+.cocoon-click-map-unavailable::after {
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  left: 12px;
+  padding: 8px;
+  background: #fff;
+  color: #d63638;
+  content: 'プレビューへバッジを重ねられませんでした';
+}
+
+.cocoon-click-causality-note {
+  margin-top: 20px;
+  padding: 12px 16px;
+  border-left: 3px solid #c3c4c7;
+  background: #f6f7f7;
+  color: #3c434a;
+}
+
+.cocoon-click-causality-note p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.cocoon-click-causality-title {
+  margin-bottom: 4px !important;
+  font-weight: 600;
+}
+
+@media screen and (width <= 782px) {
+  .cocoon-click-insights-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 .cocoon-analytics-heatmap-grid {
@@ -57,7 +623,7 @@
   width: 13px;
   height: 13px;
   border-radius: 2px;
-  background: #ebedf0;
+  background: var(--cocoon-analytics-heatmap-level-0-color);
   transition: transform .1s;
   /* ツールチップの基準点（relative）に設定します */
   position: relative;
@@ -82,7 +648,11 @@
   font-size: 10px;
   line-height: 1.3;
   border-radius: 4px;
-  white-space: nowrap;
+  width: max-content;
+  max-width: min(240px, calc(100vw - 48px));
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   opacity: 0;
   pointer-events: none;
@@ -116,25 +686,50 @@
   opacity: 1;
 }
 
+/* 下3段では吹き出しを上向きに開き、スクロール領域の下端で切れないようにします */
+.cocoon-analytics-heatmap-week > .cocoon-analytics-heatmap-cell:nth-child(n+6)::after {
+  top: auto;
+  bottom: 140%;
+  transform: translateX(-50%) translateY(5px);
+}
+
+.cocoon-analytics-heatmap-week > .cocoon-analytics-heatmap-cell:nth-child(n+6)::before {
+  top: auto;
+  bottom: 110%;
+  border-color: rgba(30, 30, 30, 0.9) transparent transparent;
+}
+
+.cocoon-analytics-heatmap-week > .cocoon-analytics-heatmap-cell:nth-child(n+6)[data-tooltip]:hover::after {
+  transform: translateX(-50%) translateY(0);
+}
+
 .cocoon-analytics-heatmap-cell.is-empty {
   background: transparent;
 }
+
+.cocoon-analytics-heatmap-cell.is-level-0 { background: var(--cocoon-analytics-heatmap-level-0-color); }
+.cocoon-analytics-heatmap-cell.is-level-1 { background: var(--cocoon-analytics-heatmap-level-1-color); }
+.cocoon-analytics-heatmap-cell.is-level-2 { background: var(--cocoon-analytics-heatmap-level-2-color); }
+.cocoon-analytics-heatmap-cell.is-level-3 { background: var(--cocoon-analytics-heatmap-level-3-color); }
+.cocoon-analytics-heatmap-cell.is-level-4 { background: var(--cocoon-analytics-heatmap-level-4-color); }
 
 .cocoon-analytics-heatmap-cell.is-future {
   background: #f5f6f8;
   opacity: 0.4;
 }
-.cocoon-analytics-heatmap-cell.is-level-0 { background: #ebedf0; }
-.cocoon-analytics-heatmap-cell.is-level-1 { background: #c6e48b; }
-.cocoon-analytics-heatmap-cell.is-level-2 { background: #7bc96f; }
-.cocoon-analytics-heatmap-cell.is-level-3 { background: #239a3b; }
-.cocoon-analytics-heatmap-cell.is-level-4 { background: #196127; }
+
+/* 突出日だけに適用する専用色 */
+.cocoon-analytics-heatmap-cell.is-outlier {
+  background: var(--cocoon-analytics-heatmap-outlier-color);
+}
 
 .cocoon-analytics-heatmap-legend {
   margin-top: 10px;
   display: flex;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
+  column-gap: 10px;
+  row-gap: 4px;
+  flex-wrap: wrap;
   font-size: 11px;
   color: #666;
   justify-content: flex-end;
@@ -143,6 +738,71 @@
 .cocoon-analytics-heatmap-legend .cocoon-analytics-heatmap-cell {
   display: inline-block;
   pointer-events: none;
+}
+
+.cocoon-analytics-heatmap-legend-title {
+  font-weight: 600;
+}
+
+.cocoon-analytics-heatmap-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.cocoon-analytics-heatmap-legend-item .cocoon-analytics-heatmap-cell {
+  flex: 0 0 13px;
+}
+
+@media (forced-colors: active) {
+  .cocoon-analytics-heatmap-cell {
+    box-sizing: border-box;
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-level-0 {
+    border-color: GrayText;
+    border-style: dotted;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-level-1 {
+    border-color: GrayText;
+    border-style: solid;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-level-2 {
+    border-color: CanvasText;
+    border-style: dashed;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-level-3 {
+    border: 2px solid CanvasText;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-level-4 {
+    background: CanvasText;
+    border: 1px solid CanvasText;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-outlier {
+    forced-color-adjust: none;
+    background: Highlight;
+    border: 0;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-future {
+    background: Canvas;
+    border-color: GrayText;
+    border-style: dashed;
+  }
+
+  .cocoon-analytics-heatmap-cell.is-empty {
+    background: transparent;
+    border: 0;
+  }
 }
 
 /* PV推移トグルボタン */
@@ -203,7 +863,13 @@
 }
 
 .cocoon-analytics-suggest-item {
+  display: block;
+  width: 100%;
+  margin: 0;
   padding: 8px 12px;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
   font-size: 12px;
   color: #333;
   cursor: pointer;
@@ -221,11 +887,284 @@
 }
 
 .cocoon-analytics-suggest-no-results {
+  display: block;
   padding: 8px 12px;
   font-size: 12px;
   color: #999;
   font-style: italic;
   text-align: left;
+}
+
+/* 記事検索と著者・カテゴリー検索で共通利用する候補名です */
+.cocoon-analytics-suggest-item-name {
+  display: block;
+  overflow: hidden;
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.cocoon-analytics-suggest-item-meta {
+  display: block;
+  margin-top: 2px;
+  overflow: hidden;
+  color: #646970;
+  font-size: 11px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+}
+
+.cocoon-analytics-post-picker-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: min(100%, 390px);
+}
+
+.cocoon-analytics-post-picker {
+  width: min(360px, 60vw);
+}
+
+.cocoon-analytics-post-picker-input {
+  width: 100%;
+  padding-right: 32px !important;
+}
+
+.cocoon-analytics-post-picker .cocoon-analytics-suggest-dropdown {
+  min-width: min(360px, 80vw);
+}
+
+/* クリックマップで人気記事と検索をまとめる省スペースの選択パネル */
+.cocoon-map-picker {
+  position: relative;
+  width: min(360px, 60vw);
+}
+
+.cocoon-map-picker [hidden] {
+  display: none !important;
+}
+
+.cocoon-map-picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 44px;
+  width: 100%;
+  min-height: 32px;
+  padding: 5px 12px;
+  border: 1px solid #8c8f94;
+  border-radius: 3px;
+  background: #fff;
+  color: #2c3338;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cocoon-map-picker-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cocoon-map-picker-clear {
+  position: absolute;
+  right: 29px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cocoon-map-picker-clear,
+.cocoon-map-picker-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  color: #50575e;
+  background: #fff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.cocoon-map-picker-panel {
+  position: absolute;
+  z-index: 1001;
+  top: calc(100% + 6px);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  max-height: min(460px, var(--cocoon-map-picker-available-height, calc(100vh - 120px)));
+  padding: 12px;
+  border: 1px solid #c3c4c7;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+}
+
+.cocoon-map-picker-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.cocoon-map-picker-panel.opens-above {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+
+.cocoon-map-picker-panel input[type="search"] {
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 36px;
+  margin: 0;
+}
+
+.cocoon-map-picker-context,
+.cocoon-map-picker-status {
+  margin: 8px 0 0;
+  color: #50575e;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.cocoon-map-picker-list {
+  min-height: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  margin: 8px -4px 0;
+  padding: 0 4px;
+}
+
+.cocoon-map-picker-list li {
+  margin: 0;
+}
+
+.cocoon-map-picker-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 4px;
+  border: 0;
+  border-bottom: 1px solid #f0f0f1;
+  background: #fff;
+  color: #2c3338;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cocoon-map-picker-item:hover,
+.cocoon-map-picker-item.is-current {
+  background: #f0f6fc;
+}
+
+.cocoon-map-picker button:focus-visible,
+.cocoon-map-picker-panel:focus-visible {
+  outline: 2px solid #2271b1;
+  outline-offset: -2px;
+}
+
+.cocoon-map-picker-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.cocoon-map-picker-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.cocoon-map-picker-item small {
+  display: block;
+  color: #646970;
+  font-size: 11px;
+}
+
+.cocoon-map-picker-rank {
+  flex: 0 0 22px;
+  color: #646970;
+  text-align: center;
+}
+
+.cocoon-map-picker-pv {
+  flex-shrink: 0;
+  padding-top: 2px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (width <= 782px) {
+  .cocoon-map-picker {
+    width: 100%;
+  }
+
+  .cocoon-map-picker-trigger {
+    min-height: 40px;
+  }
+
+  .cocoon-map-picker-panel {
+    position: fixed;
+    inset: auto 16px 16px;
+    width: auto;
+    max-height: min(560px, 70vh);
+    max-height: min(560px, 70dvh);
+  }
+}
+
+.cocoon-analytics-suggest-clear {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  padding: 0;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #646970;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cocoon-analytics-suggest-clear:hover,
+.cocoon-analytics-suggest-clear:focus-visible {
+  background: #f0f0f1;
+  color: #135e96;
+  outline: 2px solid var(--wp-admin-theme-color, #2271b1);
+  outline-offset: 0;
+}
+
+@media (width <= 782px) {
+  .cocoon-analytics-post-picker-field {
+    align-items: stretch;
+    flex: 1 1 100%;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cocoon-analytics-post-picker,
+  .cocoon-analytics-post-picker .cocoon-analytics-suggest-dropdown {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 /* タブが1行に収まらない画面幅でも自然に折り返して整列するようflexレイアウトにします */
@@ -270,6 +1209,209 @@
   font-size: 13px;
 }
 
+/* 主な条件・詳細条件・適用中の条件の段階的な表示 */
+.cocoon-analytics-filter-bar.cocoon-click-filter-bar {
+  display: block;
+  padding: 16px;
+}
+
+.cocoon-click-filter-main,
+.cocoon-click-filter-fields,
+.cocoon-click-active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+}
+
+.cocoon-click-filter-bar label,
+.cocoon-click-filter-bar .cocoon-analytics-post-picker-field {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+}
+
+.cocoon-click-filter-main > .cocoon-analytics-post-picker-field {
+  flex: 1 1 280px;
+  max-width: 540px;
+}
+
+.cocoon-click-filter-bar .cocoon-analytics-post-picker,
+.cocoon-click-filter-bar .cocoon-map-picker {
+  width: 100%;
+  min-width: 0;
+}
+
+.cocoon-click-filter-bar .cocoon-analytics-suggest-dropdown {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cocoon-click-filter-bar select,
+.cocoon-click-filter-bar input[type="text"],
+.cocoon-click-filter-bar input[type="date"],
+.cocoon-click-filter-bar .button,
+.cocoon-click-filter-bar .cocoon-map-picker-trigger {
+  min-height: 40px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.cocoon-click-filter-bar select {
+  min-width: 130px;
+  max-width: 100%;
+}
+
+.cocoon-click-filter-bar .cocoon-analytics-custom-range {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.cocoon-click-filter-bar [hidden] {
+  display: none !important;
+}
+
+.cocoon-click-filter-details {
+  margin-top: 12px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.cocoon-click-filter-details > summary {
+  padding: 12px 0 2px;
+  cursor: pointer;
+  color: #2271b1;
+  line-height: 1.8;
+}
+
+.cocoon-click-filter-summary,
+.cocoon-click-filter-count {
+  margin-inline-start: 8px;
+  color: #50575e;
+  font-size: 12px;
+}
+
+.cocoon-click-filter-count {
+  display: inline-block;
+  padding: 0 7px;
+  background: #f0f6fc;
+  border-radius: 12px;
+}
+
+.cocoon-click-filter-fields {
+  padding-top: 12px;
+}
+
+.cocoon-click-active-filters {
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cocoon-click-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  color: #1d2327;
+  background: #f6f7f7;
+  text-decoration: none;
+}
+
+.cocoon-click-filter-chip:hover {
+  border-color: #2271b1;
+  color: #135e96;
+}
+
+.cocoon-click-filter-clear {
+  padding: 5px;
+}
+
+.cocoon-click-group-switcher {
+  min-width: 0;
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+}
+
+.cocoon-click-group-switcher legend {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.cocoon-click-group-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cocoon-click-group-options button {
+  padding: 6px 14px;
+  min-height: 36px;
+  border: 1px solid #c3c4c7;
+  border-radius: 4px;
+  background: #fff;
+  color: #2c3338;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cocoon-click-group-options button:hover {
+  border-color: #2271b1;
+  color: #135e96;
+}
+
+.cocoon-click-group-options button[aria-pressed="true"] {
+  border-color: #2271b1;
+  background: #f0f6fc;
+  color: #135e96;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px #2271b1;
+}
+
+.cocoon-click-filter-details > summary:focus-visible,
+.cocoon-click-group-options button:focus-visible {
+  outline: 2px solid #2271b1;
+  outline-offset: 2px;
+}
+
+.cocoon-click-group-switcher .description {
+  margin: 8px 0 0;
+}
+
+@media (width <= 600px) {
+  .cocoon-click-filter-main > label,
+  .cocoon-click-filter-main > .cocoon-analytics-post-picker-field,
+  .cocoon-click-filter-fields > label {
+    flex: 1 1 100%;
+    max-width: none;
+    width: 100%;
+  }
+
+  .cocoon-click-filter-main > .cocoon-click-filter-submit {
+    width: 100%;
+  }
+
+  .cocoon-click-filter-summary {
+    display: none;
+  }
+
+  .cocoon-click-filter-bar select,
+  .cocoon-click-filter-bar input[type="text"],
+  .cocoon-click-filter-bar input[type="date"],
+  .cocoon-click-filter-bar .button,
+  .cocoon-click-group-options button,
+  .cocoon-click-filter-bar .cocoon-map-picker-trigger {
+    min-height: 44px;
+  }
+}
+
 .cocoon-analytics-range-label {
   color: #666;
   font-size: 12px;
@@ -297,12 +1439,16 @@
 }
 
 .cocoon-analytics-kpi-label {
+  display: block;
   font-size: 12px;
   color: #666;
   margin-bottom: 6px;
+  min-height: 2.8em;
+  line-height: 1.4;
 }
 
 .cocoon-analytics-kpi-value {
+  display: block;
   font-size: 26px;
   font-weight: 600;
   color: #1d2327;
@@ -310,6 +1456,7 @@
 }
 
 .cocoon-analytics-kpi-compare {
+  display: block;
   margin-top: 6px;
   font-size: 12px;
   color: #666;
@@ -519,7 +1666,70 @@
   margin: 16px 0 12px;
 }
 
+/* 概算の説明とページ番号をまとめる結果フッター */
+.cocoon-click-results-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  min-width: 0;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border: 1px solid #c3c4c7;
+  background: #fff;
+}
+
+/* 表に直結する結果フッターだけの上辺の共有 */
+.cocoon-click-table-panel + .cocoon-click-results-footer {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.cocoon-click-estimate-note {
+  flex: 1 1 280px;
+  min-width: 0;
+  margin: 0;
+}
+
+/* WordPress標準のtablenav余白と高さの解除 */
+.cocoon-click-pagination.tablenav {
+  flex: 0 1 auto;
+  width: auto;
+  height: auto;
+  clear: both;
+  margin: 0;
+  margin-inline-start: auto;
+}
+
+.cocoon-click-pagination .tablenav-pages {
+  float: none;
+  margin: 0 !important;
+}
+
+.cocoon-click-pagination .pagination-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+
+.cocoon-click-pagination .pagination-links .page-numbers {
+  flex: 0 0 auto;
+  margin: 0;
+  white-space: nowrap;
+}
+
 @media screen and (width <= 782px) {
+  .cocoon-click-results-footer {
+    padding: 12px;
+  }
+
+  .cocoon-click-pagination.tablenav {
+    width: 100%;
+  }
+
   /* 固定レイアウト（table-layout: fixed）による狭い画面でのタイトル列縦書き崩れを防ぐため内容に応じた列幅へ切り替え */
   .cocoon-analytics-table-scroll .cocoon-analytics-table {
     table-layout: auto;

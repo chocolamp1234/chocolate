@@ -151,6 +151,16 @@ background-image: linear-gradient( 165deg, #AA076B 0%, #61045F 20%);
 .sidebar aside > div {
 	padding: 1em;
 }
+/* 枠線付き新着情報だけの外側余白と、上下マージンのはみ出し防止 */
+.sidebar .widget_info_list:has(> .info-list.is-style-frame-border) {
+	display: flow-root;
+}
+.sidebar .widget_info_list:has(> .info-list.is-style-frame-border) > .widget-title {
+	margin-top: 0;
+}
+.sidebar .widget_info_list > .info-list.is-style-frame-border {
+	margin: 1em;
+}
 .sidebar aside .author-box {
     border: none;
     border-radius: 4px;
@@ -312,23 +322,23 @@ background-image: linear-gradient( 165deg, #AA076B 0%, #61045F 20%);
 }
 
 /* テーブル */
-.container table{
+.body table{
 	width: 90%;
 	margin-left: auto;
 	margin-right: auto;
 }
-.container table th, .container table td {
+.body table th, .body table td {
 	padding: 6px;
 }
-.container table td {
+.body table td {
 	border: none;
 }
-.container table th {
+.body table th {
 	font-weight: normal;
 	background-color: #37474F;
 	color: #ECEFF1;
 }
-.container table tr:nth-of-type(2n+1) {
+.body table tr:nth-of-type(2n+1) {
 	background-color: #f093d8;
 }
 
