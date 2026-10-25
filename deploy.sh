@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# Local WP (Simply Static export) -> このリポジトリ -> GitHub -> Vercel への
+# ワンコマンドデプロイスクリプト。
+#
+# 使い方:
+#   ./deploy.sh                 # 同期 + コミット + プッシュ
+#   ./deploy.sh --dry-run       # 実際には何も変更せず、同期される内容だけ確認
+#
+# 事前準備:
+#   1. Local WP の管理画面で Simply Static プラグインを有効化する
+#   2. Simply Static > Settings > General で
+#        Delivery Method: Local Directory
+#        Local Directory: 下記 SOURCE_DIR と同じパスを指定
+#      にしておく(初回は下記デフォルトのままでOK)
+#   3. Simply Static > Generate で静的サイトを書き出す
+
+set -euo pipefail
+
+# ---- 設定 (環境に合わせて変更してください) ----------------------------------
+# Simply Static のエクスポート先 (Local WP の chocolamp サイト内)
+SOURCE_DIR="${SOURCE_DIR:-$HOME/Local Sites/chocolamp/app/public/wp-content/uploads/simply-static/generated-files}"
+
+# このリポジトリのルート (deploy.sh が置かれている場所)
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# push するブランチ
+BRANCH="main"
+# -----------------------------------------------------------------------------
+
+DRY_RUN=false
+if [[ "${1:-}" == "--dry-run" ]]; then
+  DRY_RUN=true
+fi
+
+if [[ ! -d "$SOURCE_DIR" ]]; then
+  echo "エラー: エクスポート元フォルダが見つかりません: $SOURCE_DIR" >&2
+  echo "Simply Static で静的サイトを Generate し、出力先を確認してください。" >&2
+  exit 1
+fi
+
+echo "==> 同期元: $SOURCE_DIR"
+echo "==> 同期先: $REPO_DIR"
+
+RSYNC_OPTS=(-a --delete --exclude ".git" --exclude "deploy.sh" --exclude "README.md" --exclude "vercel.json" --exclude "optimize_images.py")
+if $DRY_RUN; then
+  RSYNC_OPTS+=(--dry-run -v)
+fi
+
+rsync "${RSYNC_OPTS[@]}" "$SOURCE_DIR"/ "$REPO_DIR"/
+
+if $DRY_RUN; then
+  echo "==> dry-run 完了。実際のファイルは変更していません。"
+  exit 0
+fi
+
+# Simply Static から同期した直後の画像(常にWP上の元画像そのまま)を圧縮する。
+# JPEGは再圧縮、不透明なPNGはJPEGに変換してサイズを大幅に削減する。
+echo "==> アップロード画像を圧縮します..."
+python3 "$REPO_DIR/optimize_images.py" "$REPO_DIR"
+
+# Simply Static の相対URL変換はスキーム付きURLしか書き換えないため、
+# プロトコルなしで出力される chocolamp.local (twitter:domain 等) を本番ドメインに置換する
+echo "==> chocolamp.local の残存参照を本番ドメインに置換します..."
+find "$REPO_DIR" -name "*.html" -not -path "*/.git/*" -print0 \
+  | xargs -0 grep -lI "chocolamp\.local" 2>/dev/null \
+  | while IFS= read -r f; do
+      sed -i '' 's/chocolamp\.local/chocolamp.vercel.app/g' "$f"
+    done
+
+# wp-sitemap*.xml の <loc> はサイトマップ仕様上、絶対URLである必要があるため
+# Simply Static が出力する相対パスを本番ドメイン付きの絶対URLに変換する
+echo "==> サイトマップの<loc>を絶対URLに変換します..."
+find "$REPO_DIR" -maxdepth 1 -name "wp-sitemap*.xml" -print0 \
+  | xargs -0 -I{} sed -i '' 's#<loc>/#<loc>https://chocolamp.vercel.app/#g' {}
+
+cd "$REPO_DIR"
+
+if [[ -z "$(git status --porcelain)" ]]; then
+  echo "==> 変更なし。コミット/プッシュはスキップします。"
+  exit 0
+fi
+
+git add -A
+
+COMMIT_MSG="Deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+git commit --quiet -m "$COMMIT_MSG"
+
+echo "==> $BRANCH ブランチへ push します..."
+git push origin "$BRANCH"
+
+echo "==> 完了。Vercel が自動でビルド/デプロイを開始します。"
